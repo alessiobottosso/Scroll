@@ -67,6 +67,10 @@ game.createScene('Main', {
         grap.drawRect(-15,-15,30,30);
         grap.addTo(myContainer);
         */
+        
+        game.Scene.swipeTime = 1500;
+        
+        this.downY = 0;
     },
 
     update: function() {
@@ -77,9 +81,21 @@ game.createScene('Main', {
         if (game.keyboard.down('DOWN')) this.sprite.y += speed * game.delta;
     },
     
+    /*
+    Too POOR for our purposes 
     swipe: function(dir) {
-        if (dir === 'UP') this.sprite.position.y -= 125;
-        else if (dir === 'DOWN') this.sprite.position.y += 125;
+        if (dir === 'UP') this.sprite.position.y -= game.Scene.swipeDist;
+        else if (dir === 'DOWN') this.sprite.position.y += game.Scene.swipeDist;
+    },
+    */
+    /* Better if we use catch these events */
+    mousedown: function(x, y) {
+        this.downY = y;
+    },
+    
+    mouseup: function(x, y) {
+        var swipeDist = this.downY - y;
+        this.sprite.position.y += swipeDist;
     }
 });
 
