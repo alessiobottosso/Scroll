@@ -46,6 +46,7 @@ game.createScene('Main', {
         //this.sprite.center(this.stage);
         this.sprite.x=0;
         this.sprite.y=0;
+        this.sprite.alpha = 0;
         this.sprite.addTo(level);
 
         var camera = new game.Camera(this.sprite);
