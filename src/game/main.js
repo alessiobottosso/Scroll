@@ -51,7 +51,7 @@ game.createScene('Main', {
 
         var camera = new game.Camera(this.sprite);
         //camera.center();
-        camera.maxSpeed =300;
+        camera.maxSpeed =650;
         camera.acceleration=4.5;
         //camera.offset.x=0;
         camera.position.x=-380;
