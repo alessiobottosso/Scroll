@@ -1,5 +1,5 @@
-var CONTENT_WIDTH = game.width * 1;
-var CONTENT_HEIGHT = game.height * 2;
+var CONTENT_WIDTH;
+var CONTENT_HEIGHT;
 
 game.module(
     'game.main'
@@ -21,6 +21,10 @@ game.addAsset('sprite.png');
 
 game.createScene('Main', {
     init: function() {
+        
+        CONTENT_WIDTH = game.width * 1;
+        CONTENT_HEIGHT = game.height * 2;
+        
         var myContainer = new game.Container();
         myContainer.anchorCenter();
         //myContainer.center(this.stage);
@@ -31,7 +35,7 @@ game.createScene('Main', {
         level.addTo(myContainer);
 
         var bg = new game.TilingSprite(
-            'sprite.png', CONTENT_WIDTH , CONTENT_HEIGHT);
+            'sprite.png', game.width , game.height * 2);
         bg.anchorCenter();
         bg.center(level);
         bg.alpha = 0.2;
@@ -141,9 +145,4 @@ game.createScene('Main', {
         }
     }
 });
-
-
-
-
-
 });
