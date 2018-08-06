@@ -1,15 +1,16 @@
-
+var CONTENT_WIDTH = game.width * 1;
+var CONTENT_HEIGHT = game.height * 2;
 
 game.module(
-	'game.main'
+    'game.main'
 )
 
 // Required Plugins
 .require(
-	'plugin.spine',
-	'plugin.essentials',
-	'plugin.p2',
-	'plugin.instantgames',
+    'plugin.spine',
+    'plugin.essentials',
+    'plugin.p2',
+    'plugin.instantgames',
 )
 
 .body(function() {
@@ -29,7 +30,8 @@ game.createScene('Main', {
         level.center(myContainer);
         level.addTo(myContainer);
 
-        var bg = new game.TilingSprite('sprite.png', game.width*1 , game.height * 2);
+        var bg = new game.TilingSprite(
+            'sprite.png', CONTENT_WIDTH , CONTENT_HEIGHT);
         bg.anchorCenter();
         bg.center(level);
         bg.alpha = 0.2;
@@ -71,6 +73,7 @@ game.createScene('Main', {
         game.Scene.swipeTime = 1500;
         
         this.downY = 0;
+        this.isMouseDown = false;
     },
 
     update: function() {
@@ -89,13 +92,53 @@ game.createScene('Main', {
     },
     */
     /* Better if we use catch these events */
-    mousedown: function(x, y) {
+    mousedown: function(x, y) 
+    {
         this.downY = y;
+        
+        this.isMouseDown = true;
     },
     
-    mouseup: function(x, y) {
+    mouseup: function(x, y) 
+    {
         var swipeDist = this.downY - y;
-        this.sprite.position.y += swipeDist;
+        
+        if (swipeDist >= 0)
+        {
+            this.sprite.position.y = Math.min(
+            this.sprite.position.y + swipeDist, (CONTENT_HEIGHT/2 - 100));
+            //this.sprite.position.y += dist;
+        }
+        
+        else
+        {
+            this.sprite.position.y = Math.max(
+            this.sprite.position.y + swipeDist, - (CONTENT_HEIGHT/2 - 100));
+        }
+        
+        this.isMouseDown = false;
+    },
+    
+    mousemove: function(x, y) 
+    {
+        if (this.isMouseDown) 
+        {
+            var dist = this.downY - y;
+            
+            if (dist >= 0)
+            {
+                this.sprite.position.y = Math.min(
+                this.sprite.position.y + dist, (CONTENT_HEIGHT/2 - 100));
+                //this.sprite.position.y += dist;
+            }
+            else
+            {
+                this.sprite.position.y = Math.max(
+                this.sprite.position.y + dist, - (CONTENT_HEIGHT/2 - 100));
+            }
+            
+            this.downY = y;
+        }
     }
 });
 
